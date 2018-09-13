@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+    ">
+	<camelContext
+		xmlns="http://camel.apache.org/schema/spring">
+
+		<endpoint id="inbox" uri="file://src/test/data/inbox" />
+
+		<route>
+			<from ref="inbox" />
+
+			<when>
+				<simple>${file:ext} == 'txt'</simple>
+				<process ref="myFileProcessor" />
+				<to uri="file://src/test/data/UpperCase" />
+				<transform>
+					<simple>${body.toLowerCase()}</simple>
+				</transform>
+				<to uri="file://src/test/data/LowerCase" />
+					<transform>
+						<simple>-------------- FILE TXT TRANFER DONE! -----------------</simple>
+					</transform>
+					<to uri="stream:out" />
+			</when>
+			<otherwise>
+				<when>
+					<simple>${file:ext} != 'txt'</simple>
+					<to uri="file://src/test/data/NOTXT" />
+					<transform>
+						<simple>-------------- FILE NO TXT TRANFER DONE! -----------------</simple>
+					</transform>
+					<to uri="stream:out" />
+				</when>
+			</otherwise>
+
+		</route>
+	</camelContext>
+
+	<bean id="myFileProcessor"
+		class="com.marllon.sc.camelexample.MyFileProcessor" />
+
+</beans>
