@@ -10,8 +10,16 @@ public class CustomRouterBuilder extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
-		from("file://src/test/data/inbox")//.process(myFileProcessor)
-		.to("file://src/test/data/outbox");
+		myFileProcessor = new MyFileProcessor();
+		
+		from("file:C:/ROUTS_TEST/inbox").choice().when().simple("${file:ext} == 'txt'")
+		.process(myFileProcessor)
+		.to("file:C:/ROUTS_TEST/outboxTXT").otherwise().to("file:C:/ROUTS_TEST/outbox");
+		
+//		from("file:C:/ROUTS_TEST/outboxTXT").to(endpoint);
+		
+		from("jetty:http://www.google.com") .to("file:C:/ROUTS_TEST/outboxTXT");
+		
 	}
 
 }
