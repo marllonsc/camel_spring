@@ -9,7 +9,7 @@ public class MyFileProcessor implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		
 		String fileContext = exchange.getIn().getBody(String.class);
-		exchange.getIn().setHeader(exchange.FILE_NAME, "MARLLON_TEST_OUTPUT.txt");
+		exchange.getIn().setHeader(Exchange.FILE_NAME, "MARLLON_TEST_OUTPUT.txt");
 		exchange.getIn().setBody(fileContext.toUpperCase());
 
 	}

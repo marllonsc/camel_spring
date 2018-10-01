@@ -21,12 +21,8 @@ public class CustomRouterBuilder extends RouteBuilder {
 		from("file:C:/ROUTS_TEST/inbox").choice().when().simple("${file:ext} == 'txt'").process(myFileProcessor)
 				.to("file:C:/ROUTS_TEST/outboxTXT").otherwise().to("file:C:/ROUTS_TEST/outbox");
 
-
 		from("jetty://http://localhost:8888/greeting").log("Received a request").process(myProcessorBody).to("file:C:/ROUTS_TEST/outboxTXT");
 
-
-
 	}
-
 
 }
