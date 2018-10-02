@@ -11,30 +11,45 @@
 		<endpoint id="inbox" uri="file:C:/SpringCamel/inbox" />
 
 		<route>
+		
 			<from ref="inbox" />
 
 			<when>
+			
 				<simple>${file:ext} == 'txt'</simple>
+				
 				<process ref="myFileProcessor" />
+				
 				<to uri="file:C:/SpringCamel/UpperCase" />
+				
 				<transform>
 					<simple>${body.toLowerCase()}</simple>
 				</transform>
 				
 				<to uri="file:C:/SpringCamel/LowerCase/?fileName=LowerCase.txt" />
+				
 				<transform>
 					<simple>-------------- FILE TXT TRANFER DONE! -----------------</simple>
 				</transform>
+				
 				<to uri="stream:out" />
+				
 			</when>
+			
 			<otherwise>
+			
 				<when>
+				
 					<simple>${file:ext} != 'txt'</simple>
+					
 					<to uri="file:C:/SpringCamel/NOTXT" />
+					
 					<transform>
 						<simple>-------------- FILE NO TXT TRANFER DONE! -----------------</simple>
 					</transform>
+					
 					<to uri="stream:out" />
+					
 				</when>
 			</otherwise>
 
