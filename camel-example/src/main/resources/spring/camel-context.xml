@@ -20,7 +20,8 @@
 				<transform>
 					<simple>${body.toLowerCase()}</simple>
 				</transform>
-				<to uri="file:C:/SpringCamel/LowerCase" />
+				
+				<to uri="file:C:/SpringCamel/LowerCase/?fileName=LowerCase.txt" />
 				<transform>
 					<simple>-------------- FILE TXT TRANFER DONE! -----------------</simple>
 				</transform>
