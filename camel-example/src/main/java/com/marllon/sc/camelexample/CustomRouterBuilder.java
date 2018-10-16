@@ -1,18 +1,10 @@
 package com.marllon.sc.camelexample;
 
-import java.util.Iterator;
-import java.util.List;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Handler;
-import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.zipfile.ZipSplitter;
-import org.apache.camel.model.dataformat.ZipDataFormat;
-import org.apache.camel.model.dataformat.ZipFileDataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.marllon.sc.camelexample.CustomRouterBuilder.ItemHolder;
 
 public class CustomRouterBuilder extends RouteBuilder {
 
@@ -23,8 +15,7 @@ public class CustomRouterBuilder extends RouteBuilder {
 	@Autowired
 	MyProcessorBody myProcessorBody;
 	
-	@Autowired
-	ProcessZipFileEntry fileProcessor;
+	
 
 	@Override
 	public void configure() throws Exception {
@@ -32,7 +23,6 @@ public class CustomRouterBuilder extends RouteBuilder {
 		myFileProcessor = new MyFileProcessor();
 		myProcessorBody = new MyProcessorBody();
 		
-		fileProcessor = new ProcessZipFileEntry();
 
 		
 //		from("file:C:/SpringCamel/inbox").to("file:C:/SpringCamel/outbox");
@@ -56,78 +46,15 @@ public class CustomRouterBuilder extends RouteBuilder {
 		
 
 		
-//		from("file:C:/SpringCamel/inbox?noop=true&delay=5000&moveFailed=error")
-//				.split(new ZipSplitter()).streaming() .choice()
-//                .when(new IsInManifest())
-//                .bean(fileProcessor)
-//                .otherwise().to("file:C:/SpringCamel/outbox").end();
 		
-		
-		    from("file:C:/SpringCamel/inbox?consumer.delay=1000&noop=true")
-		    .split(new ZipSplitter())
-		    .streaming().convertBodyTo(String.class)
-		            .to("file:C:/SpringCamel/outbox").end();
-//		
-//		from("file:C:/SpringCamel/inbox?noop=true&delay=5000&moveFailed=error").unmarshal(new ZipDataFormat())
-//		.to("file:C:/SpringCamel/outbox");
-		
-//		from("file:C:/SpringCamel/inbox?noop=true").unmarshal(new ZipDataFormat()).split(new ZipSplitter()).streaming()
-//		.to("file:C:/SpringCamel/outbox?fileName=${file:parent}/${file:name.noext}.log");
-//		
+		from("file:/opt/cmddumpapp/inbox?delete=true").split(new ZipSplitter()).streaming()
+				.to("file:/opt/cmddumpapp/outbox/").end();
 
-//		from("file:C:/SpringCamel/inbox?noop=true").unmarshal().zipFile().to("file:C:/SpringCamel/outbox");
 		
 	}
 	
-	/**
-     * Custom predicate that checks if the filename from the zip file is in the manifest.
-     */
-    class IsInManifest implements Predicate {
-
-        @Override
-        public boolean matches(final Exchange exchange) {
-            List<ItemHolder> items = (List) exchange.getProperty("expectedFiles");
-            String pdfFilename = (String) exchange.getIn().getHeader("camelFilename");
-
-            long count = items.stream()
-                    .filter(e -> e.getFilename().equals(pdfFilename))
-                    .count();
-
-            return count != 0;
-        }
-    }
+	
     
-    
-    public class ItemHolder {
-
-        private String filename;
-
-        private  boolean processed = false;
-
-        public ItemHolder(String filename) {
-            this.filename = filename;
-        }
-
-        public String getFilename() {
-            return filename;
-        }
-
-        public void setFilename(String filename) {
-            this.filename = filename;
-        }
-
-        public boolean isProcessed() {
-            return processed;
-        }
-
-        public void setProcessed(boolean processed) {
-            this.processed = processed;
-        }
-
-        public String toString() {
-            return this.filename;
-        }
-    }
 }
     
     
