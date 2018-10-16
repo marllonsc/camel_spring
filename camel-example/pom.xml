@@ -16,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.4.RELEASE</version>
-		<relativePath /> 
+		<relativePath />
 	</parent>
 
 	<properties>
@@ -29,7 +29,7 @@
 	<dependencies>
 
 		<!-- Starting Dependencies begin -->
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,16 +40,22 @@
 			<artifactId>camel-core</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-spring</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-stream</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-zipfile</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
 
@@ -64,14 +70,14 @@
 			<artifactId>camel-jetty</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-ftp</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-		
-		
+
+
 		<!-- Starting Dependencies End -->
 
 	</dependencies>
