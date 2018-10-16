@@ -46,9 +46,8 @@ public class CustomRouterBuilder extends RouteBuilder {
 		
 
 		
-		
-		from("file:/opt/cmddumpapp/inbox?delete=true").split(new ZipSplitter()).streaming()
-				.to("file:/opt/cmddumpapp/outbox/").end();
+		from("file:C:/SpringCamel/inbox?delete=true").split(new ZipSplitter()).streaming()
+				.to("file:C:/SpringCamel/outbox/").end();
 
 		
 	}
