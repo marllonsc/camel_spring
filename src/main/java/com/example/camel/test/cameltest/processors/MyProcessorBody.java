@@ -9,8 +9,8 @@ public class MyProcessorBody implements Processor{
 	
 	@Override
 	public void process(Exchange exchange) throws Exception {
-		setBody("'{'\\\"expiryDate\\\": \\\"{0}\\\",\\\"note\\\": '{'\\\"text\\\": \\\"{1}\\\"'}}'");
-		exchange.getOut().setBody(getBody());	
+		//setBody("'{'\\\"expiryDate\\\": \\\"{0}\\\",\\\"note\\\": '{'\\\"text\\\": \\\"{1}\\\"'}}'");
+		//exchange.getOut().setBody(getBody());	
 	}
 	
 	public String getBody() {

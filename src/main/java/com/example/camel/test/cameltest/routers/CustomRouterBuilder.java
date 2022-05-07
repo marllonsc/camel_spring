@@ -17,7 +17,7 @@ public class CustomRouterBuilder extends RouteBuilder {
 //		myProcessorBody = new MyProcessorBody();
 //		getHeaderProcessor = new GetHeaderProcessor();
 
-		from("file:/home/wolf/inbox").to("file:/home/wolf/outbox");
+		from("file:/home/wolf/test_camel/inbox").to("file:/home/wolf/test_camel/outbox");
 //		 
 //		
 //		from("file:C:/SpringCamel/File_inbox?noop=true").choice().when().simple("${file:ext} == 'txt'")
